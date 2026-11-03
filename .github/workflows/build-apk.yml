@@ -14,8 +14,6 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - uses: android-actions/setup-android@v3
-
       - name: Accept Android SDK licenses
         run: yes | sdkmanager --licenses
 
@@ -26,10 +24,11 @@ jobs:
         with:
           gradle-version: '8.7'
 
+      - name: Extract project
+        run: unzip -o wifi_security_android_project_phone_build.zip -d .
+
       - name: Build APK
-        run: |
-          unzip -o wifi_security_android_project_phone_build.zip -d .
-          gradle assembleDebug --no-daemon
+        run: gradle assembleDebug --no-daemon
 
       - uses: actions/upload-artifact@v4
         with:
